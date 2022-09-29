@@ -1,0 +1,11 @@
+.contextMenu{
+    position:absolute;
+    z-index: 2;
+    box-shadow: 0 5px 10px 1px black;
+    min-width: 8em;
+}
+
+.description{
+    display: inline;
+    margin-left: 1em;
+}

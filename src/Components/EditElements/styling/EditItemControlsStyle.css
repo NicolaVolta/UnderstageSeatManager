@@ -1,0 +1,39 @@
+.positionAbslute {
+    position: absolute;
+    z-index: 2;
+    margin-right:.5em;
+    right:0;
+}
+
+.parentContainer{
+    border-radius: .5em;
+    min-width: 20em;
+    max-height: 80vh;
+    margin-bottom:1em;
+    box-shadow: 0 5px 10px 1px black;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+}
+
+.controlsContainer {
+    overflow-y:auto;
+    display: flex;
+    margin:.5em;
+}
+
+.singleControlContainer {
+    display: flex;
+    flex-direction: column;
+    gap:.5em;
+    margin-top:.2em;
+    margin-bottom:.9em;
+}
+
+.elementValue{
+    text-align: center;
+}
+
+.elementText{
+    font-weight: bold;
+}

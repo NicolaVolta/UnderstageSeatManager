@@ -1,0 +1,22 @@
+.bottomToolBar{
+    position: absolute;
+    z-index: 2;
+    bottom:.5em;
+    right:.5em;
+    border-radius: .5em;
+    box-shadow: 0 5px 10px 1px black;
+    min-width: 20em;
+    min-height: 4em;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+.zoomLevel{
+    margin-right: 1em;
+    max-width: 5em;
+    min-width: 5em;
+    text-align: center;
+}
