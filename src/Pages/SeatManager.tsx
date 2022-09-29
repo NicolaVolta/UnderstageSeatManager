@@ -13,9 +13,11 @@ import { ContextMenu } from '../Components/ContextMenu/ContextMenu';
 import { PositionType } from '../Support/types/GenericTypes';
 import { SeatGroup } from '../FabricComponents/ComplexComponent/SeatGroup';
 import { MAX_ZOOM_IN, MAX_ZOOM_OUT } from '../Support/constants';
+import { ImageItem } from '../FabricComponents/SimpleComponent.js/ImageItem';
+import { TOOLS, ToolType } from '../Support/Tools';
 
 interface State{
-    selectedTool : ToolSelectionEnum, 
+    selectedTool : ToolType, 
     selectedItem : BaseItem | undefined, 
     showContextMenu : boolean, 
     contextMenuAnchorPoint : PositionType, 
@@ -36,7 +38,7 @@ export class SeatManager extends Component <{}, State>{
         this.canvasRef=createRef<HTMLCanvasElement>();
 
         this.state = {
-            selectedTool:ToolSelectionEnum.SELECTION,
+            selectedTool:TOOLS.filter(tool => tool.action===ToolSelectionEnum.SELECTION)[0],
             selectedItem:undefined,
             showContextMenu:false,
             contextMenuAnchorPoint: { x:0, y:0 },
@@ -179,7 +181,7 @@ export class SeatManager extends Component <{}, State>{
         this.handleToolSelection(this.state.selectedTool);
     }
 
-    handleToolSelection = (selectedTool : ToolSelectionEnum) :void => {
+    handleToolSelection = (selectedTool : ToolType) :void => {
         //we stop the listeners to the pending creating element
         if(!Utils.isNullOrUndefined(this.newElementCreating)){
             this.newElementCreating!.stopListeners();
@@ -189,7 +191,7 @@ export class SeatManager extends Component <{}, State>{
         this.isMoving=false;
         fabric.Object.prototype.selectable = false;
 
-        switch(selectedTool){
+        switch(selectedTool.action){
             case ToolSelectionEnum.MOVE_INSIDE_CANVAS:
                 this.isMoving=true;
                 break;
@@ -199,17 +201,16 @@ export class SeatManager extends Component <{}, State>{
             case ToolSelectionEnum.ADD_CIRCLE:
             case ToolSelectionEnum.ADD_SQUARE:
             case ToolSelectionEnum.ADD_TEXT:
-            case ToolSelectionEnum.ADD_ICON_EMERGENCY_EXIT:
-            case ToolSelectionEnum.ADD_ICON_ENTRANCE:
-            case ToolSelectionEnum.ADD_ICON_RESTROOM:
-            case ToolSelectionEnum.ADD_ICON_STEARS:
-                this.newElementCreating = new FigureItem(this.canvas, this.handleFinishCreation, selectedTool!==ToolSelectionEnum.ADD_TEXT, selectedTool);
+                this.newElementCreating = new FigureItem(this.canvas, this.handleFinishCreation, selectedTool.action!==ToolSelectionEnum.ADD_TEXT, selectedTool.action);
+                break;
+            case ToolSelectionEnum.ADD_ICON:
+                this.newElementCreating = new ImageItem(this.canvas, this.handleFinishCreation, false, selectedTool?.image ?? "");
                 break;
             case ToolSelectionEnum.CREATE_SEAT_COLUMN:
             case ToolSelectionEnum.CREATE_SEAT_GROUP:
             case ToolSelectionEnum.CREATE_SEAT_ROW:
             case ToolSelectionEnum.CREATE_SEAT_DIAGONAL:
-                this.newElementCreating = new SeatGroup(this.canvas, this.handleFinishCreation, true, selectedTool);
+                this.newElementCreating = new SeatGroup(this.canvas, this.handleFinishCreation, true, selectedTool.action);
                 break;
             case ToolSelectionEnum.CREATE_AREA:
                 //this.newElementCreating = new FigureItem(this.canvas, this.handleFinishCreation, true, selectedTool);
@@ -253,13 +254,12 @@ export class SeatManager extends Component <{}, State>{
     }
 
     handleFloorSelection = (newFloor : number) => {
-        this.canvas.clear();
         this.selectedFloor=newFloor;
-
         this.loadFloor();
     }
 
     loadFloor = () =>{
+        this.canvas.clear();
         let itemsToLoad=this.placeMap.get(this.selectedFloor);
 
         if(Utils.isNullOrUndefined(itemsToLoad)) return;

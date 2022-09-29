@@ -1,17 +1,42 @@
-import { Popover, Whisper, ButtonGroup, IconButton } from 'rsuite';
+import { Popover, Whisper, ButtonGroup, IconButton, Container, Stack } from 'rsuite';
 import { ToolSelectionEnum } from '../../Support/ToolSelectionEnum';
 import './styling/ToolMenuStyle.css';
-import { TOOLS } from '../../Support/Tools';
+import { TOOLS, ToolType } from '../../Support/Tools';
+import { ReactNode } from 'react';
 
 interface ToolMenuProps{
-    handleSelection : (selectedTool : ToolSelectionEnum) => void,
-    selectedTool : ToolSelectionEnum
+    handleSelection : (selectedTool : ToolType) => void,
+    selectedTool : ToolType
 }
 
 export function ToolMenu({ handleSelection, selectedTool } : ToolMenuProps) {
 
-    function handleToolSelection(id : ToolSelectionEnum) : void{
-        handleSelection(id);
+    const handleToolSelection = (tool : ToolType) : void => {
+        handleSelection(tool);
+    }
+
+    const getSubButton = (subTools : Array<ToolType>) : ReactNode => {
+        let returnElement : Array<ReactNode> = [];
+        const ELEMENT_PER_ROW=4;
+
+        for(let i=0; i<subTools.length; i+=ELEMENT_PER_ROW){
+            let chunk=subTools.slice(i, i+ELEMENT_PER_ROW);
+
+            returnElement.push(
+                <ButtonGroup vertical size="lg" key={i}>
+                    {chunk.map((el, index)=>{
+                        return <IconButton appearance={el.appearance} 
+                        size="lg" 
+                        color={el.id===selectedTool.id ? "yellow" : "blue"}
+                        icon={el.icon} 
+                        onClick={() => handleToolSelection(el)}
+                        key={index}/>
+                    })}
+                </ButtonGroup>
+            );
+        }
+
+        return returnElement;
     }
 
     return (
@@ -20,10 +45,10 @@ export function ToolMenu({ handleSelection, selectedTool } : ToolMenuProps) {
                 {TOOLS.map((currentTool,index) => {
                     if(currentTool.children.length===0){
                         return <IconButton appearance={currentTool.appearance} 
-                                color={currentTool.action===selectedTool ? "yellow" : "blue"}
+                                color={currentTool.id===selectedTool.id ? "yellow" : "blue"}
                                 size="lg" 
                                 icon={currentTool.icon} 
-                                onClick={() => handleToolSelection(currentTool.action)}
+                                onClick={() => handleToolSelection(currentTool)}
                                 key={index}/>
                     }
                     else{
@@ -33,16 +58,11 @@ export function ToolMenu({ handleSelection, selectedTool } : ToolMenuProps) {
                                 placement="right"
                                 speaker={
                                     <Popover>
-                                        <ButtonGroup vertical size="lg">
-                                            {currentTool.children.map((subTool, index) => {
-                                                return <IconButton appearance={subTool.appearance} 
-                                                size="lg" 
-                                                color={subTool.action===selectedTool ? "yellow" : "blue"}
-                                                icon={subTool.icon} 
-                                                onClick={() => handleToolSelection(subTool.action)}
-                                                key={index}/>
-                                            })}
-                                        </ButtonGroup>
+                                        <Container>
+                                            <Stack>
+                                                {getSubButton(currentTool.children)} 
+                                            </Stack>
+                                        </Container>
                                     </Popover>
                                 }
                                 key={index}
@@ -50,7 +70,7 @@ export function ToolMenu({ handleSelection, selectedTool } : ToolMenuProps) {
                                 <IconButton appearance={currentTool.appearance} size="lg" icon={currentTool.icon}
                                 color={
                                     currentTool.children.filter((subTool) => {
-                                        return subTool.action===selectedTool;
+                                        return subTool.id===selectedTool.id;
                                     }).length!==0 ? "yellow" : "blue"
                                 }/>
                             </Whisper>

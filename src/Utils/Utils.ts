@@ -1,14 +1,14 @@
 import { fabric } from 'fabric';
-import {  IEvent, Canvas, Rect, Ellipse, Text, IText } from 'fabric/fabric-impl';
+import {  IEvent, Canvas, Rect, Ellipse, Text, IText, Image } from 'fabric/fabric-impl';
 import { PositionType } from '../Support/types/GenericTypes';
 
 export class Utils {
 
-    static getMousePointer(canvas:Canvas, event:IEvent) : PositionType {
+    static getMousePointer(canvas : Canvas, event : IEvent) : PositionType {
         return canvas.getPointer(event.e);
     }
     
-    static createRect(width:number, height:number, color:string, angle:number) : Rect {
+    static createRect(width : number, height : number, color : string, angle : number) : Rect {
         return new fabric.Rect({
             height: height,
             width: width,
@@ -19,7 +19,7 @@ export class Utils {
         });
     } 
 
-    static createEllipse(width:number, height:number, color:string) : Ellipse {
+    static createEllipse(width : number, height : number, color : string) : Ellipse {
         return new fabric.Ellipse({
             ry: height/2,
             rx: width/2,
@@ -29,7 +29,7 @@ export class Utils {
         });
     } 
 
-    static createText(width:number, height:number, color:string, text:string) : Text {
+    static createText(width : number, height : number, color : string, text : string) : Text {
         return new fabric.Text(text, {
             height: height,
             width: width,
@@ -39,7 +39,7 @@ export class Utils {
         });
     } 
 
-    static createPromptText(width:number, height:number, color:string) : IText {
+    static createPromptText(width : number, height : number, color : string) : IText {
         return new fabric.IText("Inserisci testo", {
             height: height,
             width: width,
@@ -49,16 +49,17 @@ export class Utils {
         });
     } 
 
-    static isNullOrUndefined(element:any) : boolean {
+    static createImageFromSvg(path : string, callbackFunction : (results : fabric.Object[], options : any) => void) : void {
+        fabric.loadSVGFromURL(path, (objects, options) => callbackFunction(objects, options));
+    } 
+
+    static isNullOrUndefined(element : any) : boolean {
         return element===undefined || element===null;
     }
 
-    static resetObjectCoords(canvas:Canvas) : void {
+    static resetObjectCoords(canvas : Canvas) : void {
         canvas.forEachObject(function(object){
             object.setCoords();
-            
-            /*if(object instanceof TheaterSeatGroup)
-                object.checkIsSeatInsideGroup();*/
         })
     }
 

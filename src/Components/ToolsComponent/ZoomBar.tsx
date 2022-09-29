@@ -4,7 +4,6 @@ import './styling/ZoomBarStyle.css';
 import { Utils } from '../../Utils/Utils';
 import { MAX_ZOOM_IN, MAX_ZOOM_OUT } from '../../Support/constants';
 import { PositionType } from '../../Support/types/GenericTypes';
-import { useEffect, useState } from 'react';
 
 interface ZoomBarProps{
     currentZoom : number,

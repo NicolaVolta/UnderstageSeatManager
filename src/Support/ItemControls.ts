@@ -147,3 +147,26 @@ export const FigureItemEllipseControls : ItemControlsType = [
         type : ControlType.COLOR_PICKER
     }
 ];
+
+export const ImageItemControls : ItemControlsType = [
+    {
+        description : "Colore",
+        property : "backgroundColor",
+        type : ControlType.COLOR_PICKER
+    },
+    {
+        description : "Larghezza",
+        property : "width",
+        type : ControlType.NUMBER_PICKER
+    },
+    {
+        description : "Altezza",
+        property : "height",
+        type : ControlType.NUMBER_PICKER
+    },
+    {
+        description : "Rotazione",
+        property : "angle",
+        type : ControlType.NUMBER_RANGE
+    }
+];

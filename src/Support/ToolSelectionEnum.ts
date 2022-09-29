@@ -10,8 +10,5 @@ export enum ToolSelectionEnum {
     ADD_SQUARE = 20,
     ADD_CIRCLE = 21,
     ADD_TEXT = 22,
-    ADD_ICON_RESTROOM = 30,
-    ADD_ICON_EMERGENCY_EXIT = 31,
-    ADD_ICON_ENTRANCE = 32,
-    ADD_ICON_STEARS = 33,
+    ADD_ICON = 30,
 }
