@@ -15,6 +15,7 @@ import { SeatGroup } from '../FabricComponents/ComplexComponent/SeatGroup';
 import { MAX_ZOOM_IN, MAX_ZOOM_OUT } from '../Support/constants';
 import { ImageItem } from '../FabricComponents/SimpleComponent.js/ImageItem';
 import { TOOLS, ToolType } from '../Support/Tools';
+import { SeatItem } from '../FabricComponents/ComplexComponent/SeatItem';
 
 interface State{
     selectedTool : ToolType, 
@@ -190,6 +191,7 @@ export class SeatManager extends Component <{}, State>{
 
         this.isMoving=false;
         fabric.Object.prototype.selectable = false;
+        this.canvas.selection=false;
 
         switch(selectedTool.action){
             case ToolSelectionEnum.MOVE_INSIDE_CANVAS:
@@ -197,6 +199,10 @@ export class SeatManager extends Component <{}, State>{
                 break;
             case ToolSelectionEnum.SELECTION:
                 fabric.Object.prototype.selectable = true;
+                break;
+            case ToolSelectionEnum.SELECTION_DRAG:
+                fabric.Object.prototype.selectable = true;
+                this.canvas.selection=true;
                 break;
             case ToolSelectionEnum.ADD_CIRCLE:
             case ToolSelectionEnum.ADD_SQUARE:
