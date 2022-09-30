@@ -138,12 +138,32 @@ const WcSignSvg = forwardRef(() => (
 </svg>
 ));
 
+const MouseSelectionSvg = forwardRef(() => (
+<svg width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 4H4V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4 11V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11 4H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11 20H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20 11V13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17 4H20V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M7 20H4V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17 20H20V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+));
+
+
+
+
 export function SeatGroupIcon(){
     return <Icon as={SeatGroupSvg} style={{width:"1.5em", height:"1.5em"}}/>
 } 
 
 export function SeatRowIcon(){
     return <Icon as={SeatRowSvg} style={{width:"1.5em", height:"1.5em"}}/>
+}
+
+export function MouseSelectionIcon(){
+    return <Icon as={MouseSelectionSvg} style={{width:"1.5em", height:"1.5em"}}/>
 }
 
 export function SeatColumnIcon(){

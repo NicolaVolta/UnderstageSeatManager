@@ -1,7 +1,8 @@
 export enum ToolSelectionEnum {
     NO_SELECTION = -1,
     SELECTION=0,
-    MOVE_INSIDE_CANVAS = 1,
+    SELECTION_DRAG=1,
+    MOVE_INSIDE_CANVAS = 2,
     CREATE_AREA = 10,
     CREATE_SEAT_GROUP = 11,
     CREATE_SEAT_ROW = 12,

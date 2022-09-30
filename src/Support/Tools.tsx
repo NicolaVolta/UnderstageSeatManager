@@ -3,9 +3,10 @@ import { MdEventSeat } from 'react-icons/md';
 import { FiMove } from 'react-icons/fi'
 import { FaShapes } from 'react-icons/fa'
 import { GiArrowCursor } from 'react-icons/gi'
+import { GrSelect } from 'react-icons/gr'
 import { TypeAttributes } from 'rsuite/esm/@types/common';
 import { ToolSelectionEnum } from './ToolSelectionEnum';
-import { EmergencyExitIcon, EntranceIcon, SeatColumnIcon, SeatDiagonalIcon, SeatGroupIcon, SeatRowIcon, StairsDownIcon, StairsIcon, StairsUpIcon, WcDisabledIcon, WcSignIcon } from '../Utils/Icons';
+import { EmergencyExitIcon, EntranceIcon, MouseSelectionIcon, SeatColumnIcon, SeatDiagonalIcon, SeatGroupIcon, SeatRowIcon, StairsDownIcon, StairsIcon, StairsUpIcon, WcDisabledIcon, WcSignIcon } from '../Utils/Icons';
 import restroom_image from "./../assets/wcSign.svg";
 import restroom_disabled_image from "./../assets/wcDisabled.svg";
 import emergency_exit_image from "./../assets/emergencyExit.svg";
@@ -34,6 +35,13 @@ export const TOOLS : Array<ToolType> =[
         id:2,
         action:ToolSelectionEnum.MOVE_INSIDE_CANVAS,
         icon:<FiMove size="1.5em"/>,
+        appearance:'primary',
+        children:[]
+    },
+    {
+        id:7,
+        action:ToolSelectionEnum.SELECTION_DRAG,
+        icon:<MouseSelectionIcon/>,
         appearance:'primary',
         children:[]
     },
