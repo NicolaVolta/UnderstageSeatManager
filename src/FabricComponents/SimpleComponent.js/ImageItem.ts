@@ -37,6 +37,8 @@ export class ImageItem extends BaseItem {
         this.element.scaleToHeight(50);
 
         this.element.set({
+            originX:'center',
+            originY:'center',
             top:this.initialImagePosition.y,
             left:this.initialImagePosition.x
         });

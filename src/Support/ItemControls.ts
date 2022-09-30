@@ -31,18 +31,18 @@ export const FigureItemTextControls : ItemControlsType = [
     },
     {
         description : "Colore di sfondo",
-        property : "backgroundColor",
+        property : "fill",
         type : ControlType.COLOR_PICKER
     },
     {
         description : "Attiva bordo",
-        property : "hasBorder",
+        property : "strokeWidth",
         type : ControlType.CHECKBOX
     }
     ,
     {
         description : "Colore del bordo",
-        property : "borderColor",
+        property : "stroke",
         type : ControlType.COLOR_PICKER
     }
 ];
@@ -50,7 +50,7 @@ export const FigureItemTextControls : ItemControlsType = [
 export const FigureItemRectControls : ItemControlsType = [
     {
         description : "Colore di sfondo",
-        property : "backgroundColor",
+        property : "fill",
         type : ControlType.COLOR_PICKER
     },
     {
@@ -70,42 +70,12 @@ export const FigureItemRectControls : ItemControlsType = [
     },
     {
         description : "Attiva bordo",
-        property : "hasBorder",
+        property : "strokeWidth",
         type : ControlType.CHECKBOX
     },
     {
         description : "Colore del bordo",
-        property : "borderColor",
-        type : ControlType.COLOR_PICKER
-    },
-    {
-        description : "Bordo arrotondato",
-        property : "rx|ry",
-        type : ControlType.NUMBER_RANGE
-    },
-    {
-        description : "Larghezza",
-        property : "width",
-        type : ControlType.NUMBER_PICKER
-    },
-    {
-        description : "Altezza",
-        property : "height",
-        type : ControlType.NUMBER_PICKER
-    },
-    {
-        description : "Rotazione",
-        property : "angle",
-        type : ControlType.NUMBER_RANGE
-    },
-    {
-        description : "Attiva bordo",
-        property : "hasBorder",
-        type : ControlType.CHECKBOX
-    },
-    {
-        description : "Colore del bordo",
-        property : "borderColor",
+        property : "stroke",
         type : ControlType.COLOR_PICKER
     },
     {
@@ -118,7 +88,7 @@ export const FigureItemRectControls : ItemControlsType = [
 export const FigureItemEllipseControls : ItemControlsType = [
     {
         description : "Colore di sfondo",
-        property : "backgroundColor",
+        property : "fill",
         type : ControlType.COLOR_PICKER
     },
     {
@@ -138,12 +108,12 @@ export const FigureItemEllipseControls : ItemControlsType = [
     },
     {
         description : "Attiva bordo",
-        property : "hasBorder",
+        property : "strokeWidth",
         type : ControlType.CHECKBOX
     },
     {
         description : "Colore del bordo",
-        property : "borderColor",
+        property : "stroke",
         type : ControlType.COLOR_PICKER
     }
 ];
@@ -151,7 +121,7 @@ export const FigureItemEllipseControls : ItemControlsType = [
 export const ImageItemControls : ItemControlsType = [
     {
         description : "Colore",
-        property : "backgroundColor",
+        property : "fill",
         type : ControlType.COLOR_PICKER
     },
     {

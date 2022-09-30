@@ -19,7 +19,7 @@ export function FloorToolBar({ totalFloors, handleFloorAddRemove, handleFloorSel
         if(showConfirmDelete) setShowConfirmDelete(false);
 
         let newFloorNumber=totalFloorNumber===1 && !isAdd ? 1 : totalFloorNumber + (isAdd ? 1 : -1);
-        let newCurrentFloor=totalFloorNumber===1 || currentFloor===0 ? 0 : currentFloor-1;
+        let newCurrentFloor=totalFloorNumber===1 || currentFloor===0 ? 0 : isAdd ? currentFloor : currentFloor-1;
 
         handleFloorAddRemove(isAdd);
         handleFloorSelectionButton(newCurrentFloor);
