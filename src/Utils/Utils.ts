@@ -1,7 +1,7 @@
 import { fabric } from 'fabric';
 import {  IEvent, Canvas, Rect, Ellipse, Text, IText, Image } from 'fabric/fabric-impl';
 import { PositionType } from '../Support/types/GenericTypes';
-
+const classifyPoint = require("robust-point-in-polygon");
 export class Utils {
 
     static getMousePointer(canvas : Canvas, event : IEvent) : PositionType {
@@ -66,4 +66,24 @@ export class Utils {
     static map(x : number, in_min : number, in_max : number, out_min : number, out_max : number) : number{
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
+
+    static isPointInsideShapeRobust(el : fabric.Object, polygon : fabric.Object) : boolean{
+        let isInside = true;
+        let polyPoints=polygon.getCoords();
+        let polyCoords=[];
+        let points=el.getCoords();
+
+        for(let polyPoint of polyPoints){
+            polyCoords.push([polyPoint.x, polyPoint.y]);
+        }
+
+        for(let point of points){
+            if(!isInside) break;
+
+            isInside=classifyPoint(polyCoords, [point.x, point.y])!==1;
+        }
+    
+        return isInside;
+    }
+    
 }

@@ -69,8 +69,9 @@ export abstract class BaseItem {
 
         this.updateShapeElement(e);
 
-        this.elementShape.setCoords();
         this.canvas.add(this.elementShape);
+
+        this.elementShape.setCoords();
         this.drawOnDragging(e);
     }
 
