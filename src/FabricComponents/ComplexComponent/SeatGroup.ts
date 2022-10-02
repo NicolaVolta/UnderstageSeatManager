@@ -1,5 +1,5 @@
 import { Canvas, IEvent } from 'fabric/fabric-impl';
-import { SEAT_WHOLE_HEIGHT, SEAT_WHOLE_WIDTH, SEAT_PADDING } from '../../Support/constants';
+import { SEAT_WHOLE_HEIGHT, SEAT_WHOLE_WIDTH } from '../../Support/constants';
 import { ToolSelectionEnum } from '../../Support/ToolSelectionEnum';
 import { DimesionsType, PositionType } from '../../Support/types/GenericTypes';
 import { Utils } from '../../Utils/Utils';
@@ -74,11 +74,17 @@ export class SeatGroup extends BaseItem{
                     let Ox=this.originalElementShapePosition!.x;
                     let Oy=this.originalElementShapePosition!.y;
 
-                    let Cx=Ox+(SEAT_WHOLE_HEIGHT*j)*(mousePosition.x<Ox && angle===0 ? -1 : 1);
+                    let Cx=Ox+(SEAT_WHOLE_WIDTH*j)*(mousePosition.x<Ox && angle===0 ? -1 : 1);
                     let Cy=Oy+(SEAT_WHOLE_HEIGHT*i)*(mousePosition.y<Oy && angle===0 ? -1 : 1);
 
                     let xnew = Math.cos(angle) * (Cx - Ox) - Math.sin(angle) * (Cy-Oy) + Ox;
-                    let ynew = Math.sin(angle) * (Cx - Ox) + Math.cos(angle) * (Cy-Oy) + Oy;                       
+                    let ynew = Math.sin(angle) * (Cx - Ox) + Math.cos(angle) * (Cy-Oy) + Oy;         
+                    
+                    if(mousePosition.x<Ox && angle===0 && this.groupType!==ToolSelectionEnum.CREATE_SEAT_COLUMN)
+                        xnew-=SEAT_WHOLE_WIDTH;
+                    
+                    if(mousePosition.y<Oy && angle===0 && this.groupType!==ToolSelectionEnum.CREATE_SEAT_ROW)
+                        ynew-=SEAT_WHOLE_HEIGHT;
                     
                     var newSeat=new SeatItem(this.canvas, xnew, ynew, fabric.util.radiansToDegrees(angle));
                     this.canvas.add(newSeat.element);
