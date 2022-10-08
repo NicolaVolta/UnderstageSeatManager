@@ -1,9 +1,8 @@
-import { BsBoundingBoxCircles, BsSquare, BsCircle, BsTextareaT, BsImage } from 'react-icons/bs';
+import { BsSquare, BsCircle, BsTextareaT, BsImage } from 'react-icons/bs';
 import { MdEventSeat } from 'react-icons/md';
 import { FiMove } from 'react-icons/fi'
 import { FaShapes } from 'react-icons/fa'
 import { GiArrowCursor } from 'react-icons/gi'
-import { GrSelect } from 'react-icons/gr'
 import { TypeAttributes } from 'rsuite/esm/@types/common';
 import { ToolSelectionEnum } from './ToolSelectionEnum';
 import { EmergencyExitIcon, EntranceIcon, MouseSelectionIcon, SeatColumnIcon, SeatDiagonalIcon, SeatGroupIcon, SeatRowIcon, StairsDownIcon, StairsIcon, StairsUpIcon, WcDisabledIcon, WcSignIcon } from '../Utils/Icons';
@@ -42,13 +41,6 @@ export const TOOLS : Array<ToolType> =[
         id:7,
         action:ToolSelectionEnum.SELECTION_DRAG,
         icon:<MouseSelectionIcon/>,
-        appearance:'primary',
-        children:[]
-    },
-    {
-        id:3,
-        action:ToolSelectionEnum.CREATE_AREA,
-        icon:<BsBoundingBoxCircles/>,
         appearance:'primary',
         children:[]
     },
