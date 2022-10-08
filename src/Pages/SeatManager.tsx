@@ -12,10 +12,10 @@ import { FloorToolBar } from '../Components/ToolsComponent/FloorToolBar';
 import { ContextMenu } from '../Components/ContextMenu/ContextMenu';
 import { PositionType } from '../Support/types/GenericTypes';
 import { SeatGroup } from '../FabricComponents/ComplexComponent/SeatGroup';
-import { MAX_ZOOM_IN, MAX_ZOOM_OUT } from '../Support/constants';
+import { GRID_CELL_SIZE, MAX_HISTORY_LENGHT, MAX_ZOOM_IN, MAX_ZOOM_OUT } from '../Support/constants';
 import { ImageItem } from '../FabricComponents/SimpleComponent.js/ImageItem';
 import { TOOLS, ToolType } from '../Support/Tools';
-import { SeatItem } from '../FabricComponents/ComplexComponent/SeatItem';
+import { TopBar } from '../Components/ToolsComponent/TopBar';
 
 interface State{
     selectedTool : ToolType, 
@@ -33,6 +33,8 @@ export class SeatManager extends Component <{}, State>{
     private lastPositionInCanvas : PositionType | undefined;
     private placeMap : Map<number, Array<BaseItem>>;
     private selectedFloor : number = 0;
+    private canvasGrid : Array<fabric.Object> = [];
+    private intervalUpdateGrid : NodeJS.Timer;
 
     constructor(props:any){
         super(props);
@@ -64,6 +66,8 @@ export class SeatManager extends Component <{}, State>{
         window.addEventListener("resize", () => {
             this.canvas.setWidth(window.innerWidth);
             this.canvas.setHeight(window.innerHeight);
+
+            this.updateGrid();
         });
 
         window.addEventListener("keydown", (e) => {
@@ -91,6 +95,49 @@ export class SeatManager extends Component <{}, State>{
         });
 
         this.setupCanvasListener();
+        this.updateGrid();
+    }
+
+    private updateGrid = () => {
+        this.canvas.calcViewportBoundaries()
+        let points=this.canvas.vptCoords;
+
+        if(Utils.isNullOrUndefined(points)) return;
+
+        this.canvasGrid.forEach(el => {
+            this.canvas.remove(el);
+        });
+        this.canvasGrid=[];
+
+        let topX=points!.tl.x-points!.tl.x%GRID_CELL_SIZE;
+        let topY=points!.tl.y-points!.tl.y%GRID_CELL_SIZE;
+
+        let bottomX=points!.br.x;
+        let bottomY=points!.br.y;
+        
+        for(let i=topX; i<bottomX; i+=GRID_CELL_SIZE){
+            let line=new fabric.Line([i, topY, i, bottomY],{
+                selectable:false,
+                stroke:'#dedede',
+                hoverCursor:'cursor'
+            });
+            
+            this.canvasGrid.push(line);
+            this.canvas.add(line);
+            line.sendToBack();
+        }
+
+        for(let j=topY; j<bottomY; j+=GRID_CELL_SIZE){
+            let line=new fabric.Line([topX, j, bottomX, j],{
+                selectable:false,
+                stroke:'#dedede',
+                hoverCursor:'cursor'
+            });
+
+            this.canvasGrid.push(line);
+            this.canvas.add(line);
+            line.sendToBack();
+        }
     }
 
     private setupCanvasListener = () => {
@@ -120,10 +167,13 @@ export class SeatManager extends Component <{}, State>{
         this.canvas.on("mouse:up", () => {
             Utils.resetObjectCoords(this.canvas);
             this.lastPositionInCanvas=undefined;
+
+            this.updateGrid();
         });
 
         //zoom listener
         this.canvas.on("mouse:wheel", (event) => {
+            if(!Utils.isNullOrUndefined(this.intervalUpdateGrid)) clearTimeout(this.intervalUpdateGrid);
             let delta=event.e.deltaY;
 
             let zoom=this.canvas.getZoom();
@@ -134,6 +184,7 @@ export class SeatManager extends Component <{}, State>{
             //prevent from scrolling down in case of overflow-y
             event.e.preventDefault();
             event.e.stopPropagation();
+            this.intervalUpdateGrid=setTimeout(this.updateGrid, 500);
         });
 
         this.canvas.on("mouse:down", (event) => {
