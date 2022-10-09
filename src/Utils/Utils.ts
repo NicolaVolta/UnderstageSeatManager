@@ -1,5 +1,6 @@
 import { fabric } from 'fabric';
 import {  IEvent, Canvas, Rect, Ellipse, Text, IText, Image } from 'fabric/fabric-impl';
+import { GRID_CELL_SIZE } from '../Support/constants';
 import { PositionType } from '../Support/types/GenericTypes';
 const classifyPoint = require("robust-point-in-polygon");
 export class Utils {
@@ -85,5 +86,21 @@ export class Utils {
     
         return isInside;
     }
+
+    static isSelectionEnable() : boolean {
+        return fabric.Object.prototype.selectable || false;
+    }
     
+    static snapPositionToGrid(originalPosition : PositionType) : PositionType {
+        let snapX=(originalPosition.x/GRID_CELL_SIZE);
+        snapX=snapX%1>.5 ? Math.ceil(snapX) : Math.floor(snapX);
+        snapX*=GRID_CELL_SIZE;
+
+        let snapY=(originalPosition.y/GRID_CELL_SIZE);
+        snapY=snapY%1>.5 ? Math.ceil(snapY) : Math.floor(snapY);
+        snapY*=GRID_CELL_SIZE;
+
+        
+        return {x:snapX, y:snapY};
+    }
 }

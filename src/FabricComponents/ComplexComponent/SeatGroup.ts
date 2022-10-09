@@ -1,5 +1,5 @@
 import { Canvas, IEvent } from 'fabric/fabric-impl';
-import { SEAT_WHOLE_HEIGHT, SEAT_WHOLE_WIDTH } from '../../Support/constants';
+import { ANGLE_CONSTRAINT, SEAT_WHOLE_HEIGHT, SEAT_WHOLE_WIDTH } from '../../Support/constants';
 import { ToolSelectionEnum } from '../../Support/ToolSelectionEnum';
 import { DimesionsType, PositionType } from '../../Support/types/GenericTypes';
 import { Utils } from '../../Utils/Utils';
@@ -88,6 +88,7 @@ export class SeatGroup extends BaseItem{
                     
                     var newSeat=new SeatItem(this.canvas, xnew, ynew, fabric.util.radiansToDegrees(angle));
                     this.canvas.add(newSeat.element);
+                    newSeat.element.bringToFront();
                     this.seats[i][j]=newSeat;
                 }
             } 
@@ -138,6 +139,12 @@ export class SeatGroup extends BaseItem{
 
         let angle=Math.atan2(mousePosition.y-this.originalElementShapePosition!.y, mousePosition.x-this.originalElementShapePosition!.x);
         angle=fabric.util.radiansToDegrees(angle);
+
+        let a=(angle/ANGLE_CONSTRAINT);
+
+        a=Math.abs(a%1)<=.5 || (a<0 && Math.abs(a%1)>.5)? Math.floor(a) : Math.ceil(a);
+
+        angle=ANGLE_CONSTRAINT*a;
 
         let newWidth=Math.sqrt(Math.pow(this.originalElementShapePosition!.x - mousePosition.x,2)+
                                 Math.pow(this.originalElementShapePosition!.y - mousePosition.y,2));

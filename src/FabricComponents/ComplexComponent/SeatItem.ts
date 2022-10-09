@@ -4,7 +4,7 @@ import { SEAT_WIDTH, SEAT_HEIGHT } from '../../Support/constants';
 
 export class SeatItem {
     canvas : Canvas;
-    element : Rect;
+    public element : Rect;
 
     constructor(canvas : Canvas, left : number, top : number, angle : number){
         this.canvas=canvas;
@@ -14,6 +14,8 @@ export class SeatItem {
             top:top,
             left:left,
             angle:angle,
+            lockMovementX:true,
+            lockMovementY:true
         });
     }
 

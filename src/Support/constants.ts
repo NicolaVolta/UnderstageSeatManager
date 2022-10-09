@@ -9,3 +9,7 @@ export const MAX_ZOOM_IN=0.3;
 export const MAX_ZOOM_OUT=3;
 
 export const MAX_HISTORY_LENGHT=30;
+
+export const GRID_CELL_SIZE=SEAT_WHOLE_WIDTH;
+
+export const ANGLE_CONSTRAINT=15;

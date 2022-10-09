@@ -52,6 +52,9 @@ export abstract class BaseItem {
 
         this.isDrawing=true;
         let mousePosition=Utils.getMousePointer(this.canvas, e);
+
+        mousePosition=Utils.snapPositionToGrid(mousePosition);
+
         this.elementShape.set({
             left:mousePosition.x,
             top:mousePosition.y
@@ -77,6 +80,8 @@ export abstract class BaseItem {
 
     protected updateShapeElement(e : IEvent){
         let mousePosition=Utils.getMousePointer(this.canvas, e);
+
+        mousePosition=Utils.snapPositionToGrid(mousePosition);
 
         let newWidth=Math.sqrt(Math.pow(this.originalElementShapePosition!.x - mousePosition.x,2));
         let newHeight=Math.sqrt(Math.pow(this.originalElementShapePosition!.y - mousePosition.y,2));
